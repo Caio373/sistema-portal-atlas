@@ -5,11 +5,11 @@ import { useState, useEffect } from "react"
 import { Menu, X, Search } from "lucide-react"
 
 const navItems = [
-  { label: "Política", href: "#" },
-  { label: "Economia", href: "#" },
-  { label: "Tecnologia", href: "#" },
-  { label: "Cultura", href: "#" },
-  { label: "Mundo", href: "#" },
+  { label: "Política", href: "#congresso-agenda-digital" },
+  { label: "Economia", href: "#economia-global-transformacao" },
+  { label: "Tecnologia", href: "#ia-medicina" },
+  { label: "Cultura", href: "#streaming-cultura" },
+  { label: "Mundo", href: "#diplomacia-seculo-xxi" },
 ]
 
 export function Navbar() {
@@ -38,7 +38,9 @@ export function Navbar() {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden p-2 text-foreground/80 hover:text-foreground transition-colors"
-            aria-label="Menu"
+            aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -97,6 +99,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       <div
+        id="mobile-navigation"
         className={`lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-border/50 transition-all duration-300 ${
           isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}

@@ -1,24 +1,15 @@
+import type { Article } from "@/lib/articles"
+import { ArrowRight, Clock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
-
-interface HeroArticle {
-  title: string
-  subtitle: string
-  category: string
-  date: string
-  imageUrl: string
-  href: string
-}
 
 interface HeroSectionProps {
-  article: HeroArticle
+  article: Article
 }
 
 export function HeroSection({ article }: HeroSectionProps) {
   return (
-    <section className="relative min-h-screen flex items-end pb-20 lg:pb-32">
-      {/* Background Image */}
+    <section className="relative flex min-h-screen items-end pb-20 lg:pb-32" id="destaque">
       <div className="absolute inset-0">
         <Image
           src={article.imageUrl}
@@ -26,51 +17,50 @@ export function HeroSection({ article }: HeroSectionProps) {
           fill
           className="object-cover"
           priority
+          sizes="100vw"
         />
-        {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-background/40 to-transparent" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 w-full">
-        <div className="max-w-3xl">
-          {/* Category & Date */}
-          <div className="flex items-center gap-4 mb-6">
-            <span className="text-xs tracking-[0.3em] uppercase text-accent font-medium">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-8">
+        <article className="max-w-3xl" id={article.href.replace("#", "")}>
+          <div className="mb-6 flex flex-wrap items-center gap-4">
+            <span className="text-xs font-medium uppercase tracking-[0.3em] text-accent">
               {article.category}
             </span>
-            <span className="w-8 h-px bg-foreground/30" />
-            <span className="text-xs tracking-widest uppercase text-foreground/50">
+            <span className="h-px w-8 bg-foreground/30" />
+            <time
+              className="text-xs uppercase tracking-widest text-foreground/50"
+              dateTime={article.datetime}
+            >
               {article.date}
-            </span>
+            </time>
+            {article.readingTime && (
+              <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-foreground/50">
+                <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                {article.readingTime}
+              </span>
+            )}
           </div>
 
-          {/* Title */}
-          <h1 
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif leading-[1.1] tracking-tight mb-6 text-balance"
-          >
+          <h1 className="mb-6 text-balance font-serif text-4xl leading-[1.1] tracking-tight md:text-5xl lg:text-6xl xl:text-7xl">
             {article.title}
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-lg md:text-xl text-foreground/70 leading-relaxed mb-8 max-w-2xl">
-            {article.subtitle}
+          <p className="mb-8 max-w-2xl text-lg leading-relaxed text-foreground/70 md:text-xl">
+            {article.excerpt}
           </p>
 
-          {/* CTA */}
-          <Link
-            href={article.href}
-            className="inline-flex items-center gap-3 group"
-          >
-            <span className="text-sm tracking-widest uppercase text-foreground/80 group-hover:text-foreground transition-colors">
+          <Link href={article.href} className="group inline-flex items-center gap-3">
+            <span className="text-sm uppercase tracking-widest text-foreground/80 transition-colors group-hover:text-foreground">
               Ler matéria completa
             </span>
-            <div className="w-10 h-10 rounded-full border border-foreground/30 flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-all duration-300">
-              <ArrowRight className="h-4 w-4" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-foreground/30 transition-all duration-300 group-hover:bg-foreground group-hover:text-background">
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </div>
           </Link>
-        </div>
+        </article>
       </div>
     </section>
   )

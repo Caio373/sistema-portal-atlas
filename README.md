@@ -1,35 +1,35 @@
-<<<<<<< HEAD
-# Sistema Portal Atlas
-=======
 # Portal Atlas
 
-O **Portal Atlas** é um sistema web desenvolvido para o gerenciamento eficiente de tarefas e acompanhamento de fluxo de trabalho. Focado em produtividade, o sistema conta com uma interface minimalista e recursos como acompanhamento de Dailies e visualização de histórico de ações.
+Portal Atlas é uma aplicação web em Next.js para uma experiência de jornalismo premium, com capa editorial, grade de notícias e seleção de reportagens especiais.
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias
 
-Este projeto foi construído utilizando as seguintes tecnologias:
-- **Frontend:** React, Tailwind CSS
-- **Backend:** Node.js
-- **Design:** Protótipos construídos no Figma
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Componentes baseados em Radix UI e shadcn/ui
 
-## 📋 Requisitos do Sistema
+## Como executar
 
-O desenvolvimento deste repositório segue a implementação dos seguintes requisitos iniciais:
-- **RF-01:** O sistema deve permitir o cadastro de usuários com validação de e-mail.
-- **RF-02:** O sistema deve exibir um card atualizado de Atividades Recentes.
-- **RF-03:** O sistema deve permitir a emissão de relatórios de Dailies.
+Instale as dependências e inicie o servidor de desenvolvimento:
 
-## 👥 Equipe de Desenvolvimento
-
-Projeto desenvolvido para a disciplina de Versionamento de Software pelos alunos:
-- Caio Fagundes Mendonça Oliveira
-- Deyner Palacio Martinez
-- João Pedro Rebequi Cavalieri
-- Marcos Portales Cruz
-
-## ⚙️ Como Executar o Projeto
-
-1. Clone o repositório:
 ```bash
-   git clone [https://github.com/SEU-USUARIO/sistema-portal-atlas.git](https://github.com/SEU-USUARIO/sistema-portal-atlas.git)
->>>>>>> fde7233af0c11c5ab7607d03d58bd316776afca2
+npm install
+npm run dev
+```
+
+A aplicação ficará disponível em `http://localhost:3000`.
+
+## Scripts disponíveis
+
+```bash
+npm run dev      # inicia o ambiente de desenvolvimento
+npm run build    # gera a versão de produção
+npm run start    # executa a versão de produção
+npm run lint     # executa o lint configurado no projeto
+```
+
+## Estrutura editorial
+
+Os artigos exibidos na página inicial ficam centralizados em `lib/articles.ts`, facilitando a evolução para uma API ou CMS no futuro.

@@ -4,6 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --font-inter: Inter, system-ui, sans-serif;
+  --font-playfair: "Playfair Display", Georgia, serif;
+  --font-great-vibes: "Great Vibes", cursive;
   /* Premium Dark Theme - Deep Black with Warm Accents */
   --background: oklch(0.08 0 0);
   --foreground: oklch(0.95 0 0);
