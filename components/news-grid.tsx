@@ -1,82 +1,42 @@
+import type { Article } from "@/lib/articles"
+import { ArrowUpRight, Clock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
-
-interface Article {
-  id: string
-  title: string
-  excerpt: string
-  category: string
-  date: string
-  imageUrl: string
-  href: string
-  featured?: boolean
-}
 
 interface NewsGridProps {
   articles: Article[]
 }
 
 export function NewsGrid({ articles }: NewsGridProps) {
-  const featuredArticle = articles.find(a => a.featured) || articles[0]
-  const regularArticles = articles.filter(a => a.id !== featuredArticle.id).slice(0, 4)
+  if (articles.length === 0) {
+    return null
+  }
+
+  const featuredArticle = articles.find((article) => article.featured) ?? articles[0]
+  const regularArticles = articles.filter((article) => article.id !== featuredArticle.id)
 
   return (
-    <section className="py-20 lg:py-32">
+    <section className="py-20 lg:py-32" id="ultimas">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex items-center justify-between mb-12 lg:mb-16">
-          <div className="flex items-center gap-4">
-            <h2 className="text-xs tracking-[0.3em] uppercase text-foreground/60">
-              Últimas Notícias
-            </h2>
-            <span className="w-12 h-px bg-border" />
+        <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between lg:mb-16">
+          <div>
+            <span className="mb-3 block text-xs uppercase tracking-[0.3em] text-foreground/40">
+              Atualizado hoje
+            </span>
+            <h2 className="font-serif text-3xl lg:text-4xl">Últimas Notícias</h2>
           </div>
-          <Link 
-            href="#"
-            className="text-xs tracking-widest uppercase text-foreground/60 hover:text-foreground transition-colors"
+          <Link
+            href="#destaques"
+            className="text-xs uppercase tracking-widest text-foreground/60 transition-colors hover:text-foreground"
           >
-            Ver todas
+            Ver seleção do editor
           </Link>
         </div>
 
-        {/* Grid Layout */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Featured Article - Large */}
-          <Link 
-            href={featuredArticle.href}
-            className="group relative aspect-[4/5] lg:aspect-auto lg:row-span-2 overflow-hidden rounded-lg"
-          >
-            <Image
-              src={featuredArticle.imageUrl}
-              alt={featuredArticle.title}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-            
-            <div className="absolute inset-0 p-6 lg:p-8 flex flex-col justify-end">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-[10px] tracking-[0.3em] uppercase text-accent font-medium">
-                  {featuredArticle.category}
-                </span>
-                <span className="text-[10px] tracking-widest uppercase text-foreground/50">
-                  {featuredArticle.date}
-                </span>
-              </div>
-              
-              <h3 className="text-2xl lg:text-3xl xl:text-4xl font-serif leading-tight mb-4 group-hover:text-accent transition-colors duration-300 text-balance">
-                {featuredArticle.title}
-              </h3>
-              
-              <p className="text-sm text-foreground/60 leading-relaxed line-clamp-2 max-w-lg">
-                {featuredArticle.excerpt}
-              </p>
-            </div>
-          </Link>
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+          <ArticleFeature article={featuredArticle} />
 
-          {/* Regular Articles - Smaller Cards */}
-          <div className="grid sm:grid-cols-2 gap-6 lg:gap-8">
+          <div className="grid gap-6 sm:grid-cols-2 lg:gap-8">
             {regularArticles.map((article) => (
               <ArticleCard key={article.id} article={article} />
             ))}
@@ -87,41 +47,84 @@ export function NewsGrid({ articles }: NewsGridProps) {
   )
 }
 
+function ArticleFeature({ article }: { article: Article }) {
+  return (
+    <Link
+      href={article.href}
+      className="group relative overflow-hidden rounded-lg lg:row-span-2"
+      id={article.href.replace("#", "")}
+    >
+      <div className="relative min-h-[520px] lg:h-full">
+        <Image
+          src={article.imageUrl}
+          alt={article.title}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+      </div>
+
+      <article className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
+        <ArticleMeta article={article} className="mb-4" />
+        <h3 className="mb-4 text-balance font-serif text-2xl leading-tight transition-colors duration-300 group-hover:text-accent lg:text-3xl xl:text-4xl">
+          {article.title}
+        </h3>
+        <p className="max-w-lg text-sm leading-relaxed text-foreground/60">
+          {article.excerpt}
+        </p>
+      </article>
+    </Link>
+  )
+}
+
 function ArticleCard({ article }: { article: Article }) {
   return (
-    <Link 
-      href={article.href}
-      className="group flex flex-col"
-    >
-      {/* Image */}
-      <div className="relative aspect-[16/10] overflow-hidden rounded-lg mb-4">
+    <Link href={article.href} className="group flex flex-col" id={article.href.replace("#", "")}>
+      <div className="relative mb-4 aspect-[16/10] overflow-hidden rounded-lg">
         <Image
           src={article.imageUrl}
           alt={article.title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
         />
-        <div className="absolute inset-0 bg-background/20 group-hover:bg-transparent transition-colors duration-300" />
-        
-        {/* Hover Arrow */}
-        <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <ArrowUpRight className="h-4 w-4" />
+        <div className="absolute inset-0 bg-background/20 transition-colors duration-300 group-hover:bg-transparent" />
+
+        <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-background/80 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
         </div>
       </div>
 
-      {/* Content */}
-      <div className="flex items-center gap-3 mb-3">
-        <span className="text-[10px] tracking-[0.3em] uppercase text-accent font-medium">
-          {article.category}
-        </span>
-        <span className="text-[10px] tracking-widest uppercase text-foreground/40">
-          {article.date}
-        </span>
-      </div>
-
-      <h3 className="font-serif text-lg lg:text-xl leading-snug group-hover:text-foreground/80 transition-colors duration-300 text-balance">
+      <ArticleMeta article={article} className="mb-3" />
+      <h3 className="text-balance font-serif text-lg leading-snug transition-colors duration-300 group-hover:text-foreground/80 lg:text-xl">
         {article.title}
       </h3>
+      <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-foreground/50">
+        {article.excerpt}
+      </p>
     </Link>
+  )
+}
+
+function ArticleMeta({ article, className = "" }: { article: Article; className?: string }) {
+  return (
+    <div className={`flex flex-wrap items-center gap-3 ${className}`}>
+      <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-accent">
+        {article.category}
+      </span>
+      <time
+        className="text-[10px] uppercase tracking-widest text-foreground/40"
+        dateTime={article.datetime}
+      >
+        {article.date}
+      </time>
+      {article.readingTime && (
+        <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest text-foreground/40">
+          <Clock className="h-3 w-3" aria-hidden="true" />
+          {article.readingTime}
+        </span>
+      )}
+    </div>
   )
 }

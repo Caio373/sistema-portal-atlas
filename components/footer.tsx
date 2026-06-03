@@ -3,18 +3,18 @@ import { Instagram, Twitter, Youtube, Linkedin } from "lucide-react"
 
 const footerLinks = {
   sections: [
-    { label: "Política", href: "#" },
-    { label: "Economia", href: "#" },
-    { label: "Tecnologia", href: "#" },
-    { label: "Cultura", href: "#" },
-    { label: "Mundo", href: "#" },
-    { label: "Opinião", href: "#" },
+    { label: "Política", href: "#congresso-agenda-digital" },
+    { label: "Economia", href: "#economia-global-transformacao" },
+    { label: "Tecnologia", href: "#ia-medicina" },
+    { label: "Cultura", href: "#streaming-cultura" },
+    { label: "Mundo", href: "#diplomacia-seculo-xxi" },
+    { label: "Destaques", href: "#destaques" },
   ],
   company: [
-    { label: "Sobre nós", href: "#" },
-    { label: "Redação", href: "#" },
-    { label: "Contato", href: "#" },
-    { label: "Trabalhe conosco", href: "#" },
+    { label: "Sobre nós", href: "#destaque" },
+    { label: "Redação", href: "#destaques" },
+    { label: "Contato", href: "mailto:redacao@atlas.example" },
+    { label: "Trabalhe conosco", href: "mailto:talentos@atlas.example" },
   ],
   legal: [
     { label: "Termos de uso", href: "#" },
@@ -24,10 +24,10 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { label: "Instagram", href: "#", icon: Instagram },
-  { label: "Twitter", href: "#", icon: Twitter },
-  { label: "YouTube", href: "#", icon: Youtube },
-  { label: "LinkedIn", href: "#", icon: Linkedin },
+  { label: "Instagram", href: "https://instagram.com", icon: Instagram },
+  { label: "Twitter", href: "https://x.com", icon: Twitter },
+  { label: "YouTube", href: "https://youtube.com", icon: Youtube },
+  { label: "LinkedIn", href: "https://linkedin.com", icon: Linkedin },
 ]
 
 export function Footer() {
