@@ -1,1 +1,2 @@
 RF-01 O sistema deve permitir o cadastro de usuarios no portal.
+RF-02 O sistema deve exibir um card de Atividades Recentes.
